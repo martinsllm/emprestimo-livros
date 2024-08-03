@@ -1,0 +1,6 @@
+@emprestimo_livro_HostAddress = http://localhost:5276
+
+GET {{emprestimo_livro_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
