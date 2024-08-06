@@ -1,8 +1,11 @@
 using emprestimo_livro.Database;
+using emprestimo_livro.Repositories;
+using emprestimo_livro.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -14,6 +17,8 @@ builder.Services.AddEntityFrameworkMySql()
         options => options.UseMySql(connectionString, serverVersion)
     );
 
+builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -24,6 +29,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.MapControllers();
 
 app.Run();
 
