@@ -41,7 +41,7 @@ namespace emprestimo_livro.Controllers {
         [HttpDelete("{id}")]
         public async Task<ActionResult<bool>> Remove(int id) {
             await _clientRepository.Remove(id);
-            return Ok();
+            return NoContent();
         }
 
     }
