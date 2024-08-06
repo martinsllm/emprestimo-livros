@@ -18,22 +18,40 @@ namespace emprestimo_livro.Repositories {
         }
 
         public async Task<Cliente> GetById(int id) {
-            return await _dbContext.Clientes.FirstOrDefaultAsync(x => x.Id == id);
+            Cliente cliente = await _dbContext.Clientes.FirstOrDefaultAsync(x => x.Id == id);
+
+            if(cliente == null) throw new Exception($"Usuário para o ID: {id} não foi encontrado!");
+
+            return cliente;
         }
 
         public async Task<Cliente> Create(Cliente cliente) {
-            await _dbContext.AddAsync(cliente);
+            await _dbContext.Clientes.AddAsync(cliente);
             await _dbContext.SaveChangesAsync();
 
             return cliente;
         }
 
-        public Task<Cliente> Update(Cliente cliente, int id) {
-            throw new NotImplementedException();
+        public async Task<Cliente> Update(Cliente cliente, int id) {
+            Cliente foundClient = await GetById(id);
+
+            foundClient.Nome = cliente.Nome;
+            foundClient.Email = cliente.Email;
+            foundClient.Telefone = cliente.Telefone;
+
+            _dbContext.Clientes.Update(foundClient);
+            await _dbContext.SaveChangesAsync();
+            
+            return foundClient;
         }
 
-        public Task<bool> Remove(int id) {
-            throw new NotImplementedException();
+        public async Task<bool> Remove(int id) {
+            Cliente foundClient = await GetById(id);
+
+            _dbContext.Clientes.Remove(foundClient);
+            await _dbContext.SaveChangesAsync();
+
+            return true;
         }
         
     }

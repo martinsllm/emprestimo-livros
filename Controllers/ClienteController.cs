@@ -32,6 +32,17 @@ namespace emprestimo_livro.Controllers {
             return Ok(cliente);
         }
 
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Cliente>> Update([FromBody] Cliente clienteBody, int id) {
+            Cliente cliente = await _clientRepository.Update(clienteBody, id);
+            return Ok(cliente);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult<bool>> Remove(int id) {
+            await _clientRepository.Remove(id);
+            return Ok();
+        }
 
     }
 }
