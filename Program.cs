@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using emprestimo_livro.Database;
 using emprestimo_livro.Repositories;
 using emprestimo_livro.Repositories.Interfaces;
@@ -5,7 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(x =>
+   x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
+   
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
@@ -19,6 +22,7 @@ builder.Services.AddEntityFrameworkMySql()
 
 builder.Services.AddScoped<IClienteRepository, ClienteRepository>();
 builder.Services.AddScoped<ILivroRepository, LivroRepository>();
+builder.Services.AddScoped<IEmprestimoRepository, EmprestimoRepository>();
 
 var app = builder.Build();
 

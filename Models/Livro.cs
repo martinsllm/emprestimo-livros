@@ -15,6 +15,6 @@ namespace emprestimo_livro.Models {
 
         public required string AnoPublicacao { get; set; }
 
-        public virtual ICollection<LivroClienteEmprestimo>? LivroClienteEmprestimo { get; set; }
+        public ICollection<Emprestimo>? Emprestimo { get; set; }
     }
 }
