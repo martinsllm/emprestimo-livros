@@ -18,9 +18,7 @@ namespace emprestimo_livro.Repositories {
         }
 
         public async Task<Cliente> GetById(int id) {
-            Cliente? cliente = await _dbContext.Clientes
-                .Include(emprestimo => emprestimo.Emprestimo)
-                .FirstOrDefaultAsync(x => x.Id == id);
+            Cliente? cliente = await _dbContext.Clientes.FirstOrDefaultAsync(x => x.Id == id);
 
             if(cliente == null) throw new Exception($"Usuário para o ID: {id} não foi encontrado!");
 
