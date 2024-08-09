@@ -1,6 +1,7 @@
 using emprestimo_livro.Database;
 using emprestimo_livro.Models;
 using emprestimo_livro.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace emprestimo_livro.Repositories {
 
@@ -10,6 +11,13 @@ namespace emprestimo_livro.Repositories {
 
         public EmprestimoRepository(EmprestimoDbContext dbContext) {
             _dbContext = dbContext;
+        }
+
+        public async Task<List<Emprestimo>> GetByUser(int id) {
+            return await _dbContext.Emprestimos
+                .Where(x => x.ClienteId == id)
+                .Include(livro => livro.Livro)
+                .ToListAsync();
         }
 
 

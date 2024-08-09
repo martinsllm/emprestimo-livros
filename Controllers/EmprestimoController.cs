@@ -14,6 +14,12 @@ namespace emprestimo_livro.Controllers {
             _emprestimoRepository = emprestimoRepository;
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<List<Emprestimo>>> GetByUser(int id) {
+            List<Emprestimo> emprestimos = await _emprestimoRepository.GetByUser(id);
+            return Ok(emprestimos);
+        }
+
         [HttpPost]
         public async Task<ActionResult<Emprestimo>> Create([FromBody] Emprestimo emprestimoBody) {
             Emprestimo emprestimo = await _emprestimoRepository.Create(emprestimoBody);
