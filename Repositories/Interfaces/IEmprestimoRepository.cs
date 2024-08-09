@@ -6,6 +6,10 @@ namespace emprestimo_livro.Repositories.Interfaces {
 
         Task<List<Emprestimo>> GetByUser(int id);
 
+        Task<Emprestimo> GetById(int id);
+
         Task<Emprestimo> Create(Emprestimo emprestimo);
+
+        Task<bool> Remove(int id);
     }
 }

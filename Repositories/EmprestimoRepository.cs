@@ -20,12 +20,29 @@ namespace emprestimo_livro.Repositories {
                 .ToListAsync();
         }
 
+        public async Task<Emprestimo> GetById(int id) {
+            Emprestimo? emprestimo = await _dbContext.Emprestimos.FirstOrDefaultAsync(x => x.Id == id);
+
+            if(emprestimo == null) throw new Exception($"Empréstimo nº {id} não foi encontrado!");
+
+            return emprestimo;
+        }
 
         public async Task<Emprestimo> Create(Emprestimo emprestimo) {
             await _dbContext.Emprestimos.AddAsync(emprestimo);
             await _dbContext.SaveChangesAsync();
             
             return emprestimo;
+        }
+
+        public async Task<bool> Remove(int id) {
+            Emprestimo foundLoan = await GetById(id);
+
+            _dbContext.Emprestimos.Remove(foundLoan);
+            await _dbContext.SaveChangesAsync();
+
+            return true;
+
         }
     }
 }
